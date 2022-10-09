@@ -56,21 +56,9 @@ library(ggplot2)
 library(scales)
 ```
 
+###  Start cleaning process for the three tables after importing
 
-
-###  Prepare data for exploration
-
-* importing the most important data tables
-```{r}
-weight_loginfo <- read_csv("D:/Courses/Data Analysis/Fitabase _Data(04.12.2016-05.12.2016)/weightLogInfo_merged.csv")
-daily_activity <- read_csv("D:/Courses/Data Analysis/Fitabase _Data(04.12.2016-05.12.2016)/dailyActivity_merged.csv")
-sleep_day <- read_csv("D:/Courses/Data Analysis/Fitabase _Data(04.12.2016-05.12.2016)/sleepDay_merged.csv")
-hourly_steps <- read_csv("D:/Courses/Data Analysis/Fitabase _Data(04.12.2016-05.12.2016)/hourlySteps_merged.csv")
-```
-
-###  process data from dirty to clean
-
-* view data tables to have a glance
+* View data tables to have a glance
 ```{r}
 head(weight_loginfo)
 head(daily_activity)
@@ -78,7 +66,7 @@ head(sleep_day)
 head(hourly_steps)
 ```
 
-* Check for NA & duplicates
+* Check for NA & Duplicates
 ```{r}
 sum(is.na(daily_activity))
 sum(is.na(sleep_day))
@@ -88,27 +76,31 @@ sum(duplicated(sleep_day))
 sum(duplicated(daily_activity))
 sum(duplicated(weight_loginfo))
 ```
+We have **33** unique user with recorded daily activity, **24** users with sleep records and only **8** users with weight records
 
-* removing duplicates
+* check how many people have entered their weight manually
+```{r}
+weight_loginfo %>% 
+  filter(IsManualReport == TRUE) %>% 
+  group_by(Id) %>% 
+  summarize("Manual Weight Report"=n()) %>%
+  distinct()
+```
+**5** out of **8** users in total who entered their weight manually
+
+* Removing duplicates
 ```{r}
 sleep_day <- sleep_day[!duplicated(sleep_day$Id), ]
 ```
 
-* count ID distinct values
-```{r}
-n_distinct(daily_activity$Id)
-n_distinct(sleep_day$Id)
-n_distinct(weight_loginfo$Id)
-```
-
-* inserting new column for weekdays
+* Inserting new column for weekdays in Date formate
 ```{r}
 daily_activity <- daily_activity %>% 
   mutate(ActivityDays = weekdays(as.Date(ActivityDate,"%m/%d/%Y")))
 head(daily_activity)
 ```
 
-* merging three tables together by ID
+* Merging three tables together by ID
 ```{r}
 joined_tibble <- merge(daily_activity, sleep_day, by = c("Id"), all = TRUE)
 combined_data <- merge(joined_tibble, weight_loginfo, by = c("Id"), all = TRUE)
@@ -120,21 +112,12 @@ combined_data$ActivityDays <- factor(combined_data$ActivityDays, levels= c("Frid
 combined_data[order(combined_data$ActivityDays), ]
 ```
 
-* save as csv file for tableau
+* Save as csv file for tableau
 ```{r}
 write_csv(combined_data, "combined_data.csv")
 ```
 
-* check for duplicates and NA again
-```{r}
-sum(is.na(combined_data))
-sum(duplicated(combined_data))
-n_distinct(combined_data$Id)
-```
-
-
-
-### Analyze data to answer questions
+### Analyze 
   
   
 #### acitvity analysis through the day
@@ -155,7 +138,6 @@ ggplot(data = combined_data, mapping = aes(x=ActivityDays))+
   geom_bar()+
   labs(title = "Acitivity during the week")
 ```
-
 
 * by week
 ```{r}
