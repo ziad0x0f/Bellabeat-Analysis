@@ -300,3 +300,9 @@ ggplot(data=combined_data, aes(x=TotalMinutesAsleep, y = Calories, color=TotalMi
 ![sleepvscalories](https://user-images.githubusercontent.com/100311796/194781723-9ed36a70-56f5-4929-b9de-acf95db1046e.png)
 
 The plot of total minutes the users spent asleep and total calories that they had burned, illustrates that there is no correlation between both variables
+
+## 5. Share
+
+[Tableau Dashboard](https://public.tableau.com/views/BellaBeatDashboard/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link)
+![Screenshot (15)](https://user-images.githubusercontent.com/100311796/194781949-5fda6818-75e1-428b-81fb-66b1ca13aeb9.png)
+
