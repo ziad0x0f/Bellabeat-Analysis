@@ -1,5 +1,3 @@
-the project is yet not completed!!
-
 # Bellabeat Fitness Data Analysis 
 ##### Author: Ziad Zakaria 
 
@@ -274,17 +272,30 @@ sleep_data <- sleep_data %>%
   mutate(n = n())
 ```
 
+* Convert sleep Status to percentage
+```{r}
+sleep_data <- sleep_data %>% 
+  group_by(Status) %>% # Variable to be transformed
+  count() %>% 
+  ungroup() %>% 
+  mutate(perc = `n` / sum(`n`)) %>% 
+  arrange(perc) %>%
+  mutate(labels = scales::percent(perc))
+```
+
 * plotting sleep category portions
 ```{r}
-ggplot(data = sleep_data, aes(x="", y=n, fill=Status)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0)+
-  scale_fill_brewer(palette="Blues")+
+ggplot(sleep_data, aes(x = "", y = perc, fill = Status)) +
+  geom_col() +
+  geom_text(aes(label = labels),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "y")+
+  scale_fill_brewer()+
   theme_void()
 ```
-![000016](https://user-images.githubusercontent.com/100311796/194781559-82063505-a107-4e46-ba79-152169b540e1.png)
+![PIE](https://user-images.githubusercontent.com/100311796/194875122-0e6d1751-7ac4-4cfd-9bf0-67f84b200e84.png)
 
-The data indicates that most of our users are either under pressure or suffering sleep debt
+The data indicates that most of our users are either under pressure or suffering sleep debt.
 
 
 * check if burned calories and total sleep minutes are correlated
@@ -306,3 +317,19 @@ The plot of total minutes the users spent asleep and total calories that they ha
 [Tableau Dashboard](https://public.tableau.com/views/BellaBeatDashboard/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link)
 ![Screenshot (15)](https://user-images.githubusercontent.com/100311796/194781949-5fda6818-75e1-428b-81fb-66b1ca13aeb9.png)
 
+## 5. Act
+
+# Conclusions:
+  
+  * 5 out of 8 users have recorded their weight manually which can cause some inconsistencies in the data
+  * Sedentary activities account for 81% of users' daily active minutes. Users spend an average of 12 hours per day sedentary, 4 hours lightly active, and only a half-hour fairly+very active
+  * Sunday is the least day in total steps and burned calories. so, it can be considered as the least active day
+  * At low total steps people who take more time in sedentary still managed to burn a close amount of calories compared to users who spent less time in sedentary
+  * only 29% of the users had a healthy sleep while other 71% had sleep deficiencies
+ 
+ # Recommendations for Bellabeat Marketing Strategy
+ 
+ 1. Encourage users to connect their phone with Bellabeat fit app to obtain more data and gaining more helpful insights for them
+ 2. Motivate more users to use their bluetooth or Wifi Digital scales to log their weight instead of manual log
+ 3. Adding bonus point system that can be redeemed with a sale percentage on certain bellabeat app services when the users complete more than 10,000 step per day, especially in lazy days like Sunday
+ 4. Making the wellness watch push notifications for the users to show their sleep analytics and recommendations for when to go to sleep and what time to wake up, by setting automaticaly an alarm for the recommended wake up time to avoid sleep deficiencies  
