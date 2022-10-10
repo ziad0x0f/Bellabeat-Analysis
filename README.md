@@ -319,7 +319,7 @@ The plot of total minutes the users spent asleep and total calories that they ha
 
 ## 5. Act
 
-# Conclusions:
+#### Conclusions:
   
   * 5 out of 8 users have recorded their weight manually which can cause some inconsistencies in the data
   * Sedentary activities account for 81% of users' daily active minutes. Users spend an average of 12 hours per day sedentary, 4 hours lightly active, and only a half-hour fairly+very active
@@ -327,7 +327,7 @@ The plot of total minutes the users spent asleep and total calories that they ha
   * At low total steps people who take more time in sedentary still managed to burn a close amount of calories compared to users who spent less time in sedentary
   * only 29% of the users had a healthy sleep while other 71% had sleep deficiencies
  
- # Recommendations for Bellabeat Marketing Strategy
+#### Recommendations for Bellabeat Marketing Strategy:
  
  1. Encourage users to connect their phone with Bellabeat fit app to obtain more data and gaining more helpful insights for them
  2. Motivate more users to use their bluetooth or Wifi Digital scales to log their weight instead of manual log
