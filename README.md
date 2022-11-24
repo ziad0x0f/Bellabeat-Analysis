@@ -1,4 +1,5 @@
 # Bellabeat Fitness Data Analysis 
+![download-removebg-preview](https://user-images.githubusercontent.com/100311796/203800901-5e95fde7-97d5-4494-a758-d8151fa260bc.png)
 ##### Author: Ziad Zakaria 
 
 ##### Date: 2022-09-28
